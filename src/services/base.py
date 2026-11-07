@@ -12,10 +12,10 @@ _T = TypeVar("_T")
 
 
 class BaseService(ServiceInterface[PostgresClient, RedisClient]):
-    async def get_scalar(self, query: Select[tuple[_T]]) -> _T | None:
-        async with self.db.session_factory() as session:
+    async def get_scalar(self, query: Select[_T | tuple[_T]]) -> _T | None:
+        async with self.db.get_session() as session:
             return await session.scalar(query)
 
-    async def get_scalars(self, query: Select[tuple[_T]]) -> ScalarResult:
-        async with self.db.session_factory() as session:
+    async def get_scalars(self, query: Select[_T | tuple[_T]]) -> ScalarResult:
+        async with self.db.get_session() as session:
             return await session.scalars(query)

@@ -30,7 +30,7 @@ class PostgresConfigDC(BaseModel):
     max_overflow: int = Field(20, alias="MAX_OVERFLOW")
     timeout: float = Field(30.0, alias="TIMEOUT")
     statement_timeout: int = Field(0, alias="STATEMENT_TIMEOUT")
-    expire_on_commit: bool = Field(True, alias="EXPIRE_ON_COMMIT")
+    expire_on_commit: bool = Field(False, alias="EXPIRE_ON_COMMIT")
     content_schema: str = Field("public", alias="CONTENT_SCHEMA")
     echo: bool = Field(False, alias="ECHO")
 
