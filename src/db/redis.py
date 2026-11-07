@@ -4,6 +4,7 @@ from typing import Any
 from redis.asyncio import (
     ConnectionError as RedisConnectionError,
     Redis,
+    RedisError,
     TimeoutError as RedisTimeoutError,
 )
 
@@ -50,7 +51,7 @@ class RedisClient(CacheClientInterface[RedisConfigDC]):
 
             await self.ping()
 
-        except (RedisConnectionError, RedisTimeoutError) as err:
+        except RedisError as err:
             logger.error("[Redis] Was not connected with error: %s", err)
 
     async def disconnect(self) -> None:
@@ -70,7 +71,7 @@ class RedisClient(CacheClientInterface[RedisConfigDC]):
         pass
 
 
-async def get_client(config: RedisConfigDC) -> RedisClient | None:
+async def get_client(config: RedisConfigDC) -> RedisClient:
     client = RedisClient(config)
     await client.connect()
 

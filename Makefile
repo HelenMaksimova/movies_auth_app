@@ -18,3 +18,6 @@ migrate_upgrade:
 
 migrate_downgrade:
 	@$(ALEMBIC_CMD) downgrade $(DOWN_NUM)
+
+test_realm_token:
+	@echo bc248ba1cec616298d82b0336960b704dfd9f77e423266d284c0df801f01b278

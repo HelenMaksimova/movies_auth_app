@@ -5,6 +5,7 @@ from asyncpg import PostgresError
 from fastapi import APIRouter, Request, Response, status as http_status
 from redis import RedisError
 from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
 
 from src.dependencies import DepPostgresSession
 
@@ -25,7 +26,7 @@ async def check(
     try:
         await session.execute(text("SELECT 1"))
         await request.app.state.redis.ping()
-    except (PostgresError, RedisError):
+    except (SQLAlchemyError, PostgresError, RedisError):
         status = "unhealthy"
         response.status_code = http_status.HTTP_503_SERVICE_UNAVAILABLE
 
